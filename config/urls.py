@@ -19,6 +19,7 @@ from decouple import config
 
 urlpatterns = [
     path('', include('product.urls'), name='product'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
 ]
 
