@@ -1,13 +1,17 @@
 from django.contrib import admin
-from .models import Product, Category, Photo
+from .models import Product, Category, Photo, Data
 
 
 class PhotoAdmin(admin.StackedInline):
     model = Photo
 
 
+class DataAdmin(admin.StackedInline):
+    model = Data
+
+
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [PhotoAdmin]
+    inlines = [PhotoAdmin, DataAdmin]
 
     class Meta:
         model = Product
