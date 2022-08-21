@@ -15,7 +15,6 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda hosts: [host.strip() for host in hosts.split(',')])
-print(ALLOWED_HOSTS)
 
 # Application definition
 
@@ -151,5 +150,17 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
+        'skin': 'office2013',
+        # 'toolbar_Custom': [
+        #     ['Bold', 'Italic', 'Underline'],
+        #     ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        #     ['Link', 'Unlink'],
+        #     ['RemoveFormat', 'Source']
+        # ],
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'autolink',
+            'lineutils',
+        ])
     },
 }
