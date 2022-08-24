@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     'account.apps.AccountConfig',
     'product.apps.ProductConfig',
+    'extentions',
 
     'ckeditor',
     'ckeditor_uploader',
@@ -150,14 +151,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
-        'skin': 'office2013',
-        # 'toolbar_Custom': [
-        #     ['Bold', 'Italic', 'Underline'],
-        #     ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-        #     ['Link', 'Unlink'],
-        #     ['RemoveFormat', 'Source']
-        # ],
-        'extraPlugins': ','.join([
+        'skin': 'office2013','extraPlugins': ','.join([
             'uploadimage',
             'autolink',
             'lineutils',
