@@ -1,8 +1,11 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from django.utils.html import strip_tags
+from django.contrib.humanize.templatetags.humanize import intcomma
 from PIL import Image
 from ckeditor_uploader.fields import RichTextUploadingField
+from extentions.utils import jalali_converot
 
 
 class Category(models.Model):
@@ -30,7 +33,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField('نام', max_length=125)
-    slug = models.SlugField(max_length=125, allow_unicode=True, blank=True, verbose_name='آدرس')
+    slug = models.SlugField(max_length=125, allow_unicode=True, blank=True, help_text='اختیاری', verbose_name='آدرس')
     category = models.ManyToManyField(Category, related_name='products', verbose_name='دسته بندی')
     description = RichTextUploadingField(verbose_name='توضیحات')
     publish = models.DateTimeField(default=timezone.now, verbose_name='تاریخ انتشار')
@@ -40,7 +43,7 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    status = models.BooleanField('آیا نمایش داده شود؟', default=True)
+    status = models.BooleanField('وضعیت', help_text='آیا نمایش داده شود؟', default=True)
 
     meta_title = models.CharField('عنوان متا', max_length=125, blank=True)
     meta_description = models.TextField('توضیحات متا', max_length=125, blank=True)
@@ -54,6 +57,18 @@ class Product(models.Model):
         verbose_name_plural = 'محصولات'
         ordering = ['-publish']
 
+    def categories_list(self):
+        return ' , '.join([cat.name for cat in self.category.filter(status=True)])
+    categories_list.short_description = 'دسته بندی ها'
+
+    def jpublish(self):
+        return jalali_converot(self.publish)
+    jpublish.short_description = 'تاریخ انتشار'
+
+    def humanize_price(self):
+        return intcomma(self.price, False)
+    humanize_price.short_description = 'قیمت'
+
     def __str__(self):
         return self.name
 
@@ -63,7 +78,7 @@ class Product(models.Model):
         if not self.meta_title:
             self.meta_title = self.name
         if not self.meta_description:
-            self.meta_description = self.description
+            self.meta_description = strip_tags(self.description)
 
         super(Product, self).save(*args, **kwargs)
 
