@@ -34,7 +34,7 @@ class Article(models.Model):
     slug = models.SlugField(max_length=100, allow_unicode=True, unique=True, verbose_name='آدرس صفحه')
     category = models.ManyToManyField(Category, verbose_name='دسته بندی', related_name='articles')
     description = RichTextUploadingField(verbose_name='محتوا')
-    thumbnail = models.ImageField(upload_to='blog', verbose_name='عکس اصلی')
+    image = models.ImageField(upload_to='blog', verbose_name='عکس اصلی')
     publish = models.DateTimeField(default=timezone.now, verbose_name='زمان انتشار')
 
     created = models.DateTimeField(auto_now_add=True)
