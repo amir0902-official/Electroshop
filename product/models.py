@@ -3,9 +3,12 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.html import strip_tags
 from django.contrib.humanize.templatetags.humanize import intcomma
+
 from PIL import Image
 from ckeditor_uploader.fields import RichTextUploadingField
 from extentions.utils import jalali_converot
+
+from .managers import *
 
 
 class Category(models.Model):
@@ -15,6 +18,8 @@ class Category(models.Model):
     position = models.PositiveSmallIntegerField('جایگاه', unique=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children', default=None, blank=True,
                                null=True, verbose_name='زیر دسته')
+
+    objects = CategoryManager()
 
     class Meta:
         verbose_name = 'دسته بندی'
@@ -51,6 +56,8 @@ class Product(models.Model):
     related_products = models.ManyToManyField(
         "self", verbose_name='محصولات مرتبط', blank=True,
         default=None, symmetrical=False, related_name="related_products_list")
+
+    objects = ProductManager()
 
     class Meta:
         verbose_name = 'محصول'
