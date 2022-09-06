@@ -1,0 +1,164 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block custom-head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'product/css/product.css' %}"/>
+{% endblock %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block main %}
+    <!-- Product section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6">
+                    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for image in object.photos.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ image.photo.url }}" class="d-block w-100" alt="{{ image.alt }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder">{{ object.name }}</h1>
+                    <div class="fs-5 mb-5">
+                        <span>{{ object.humanize_price }}</span>
+                    </div>
+                    <p class="lead">{{ object.description|safe }}</p>
+                    <div class="d-flex">
+                        <input class="form-control text-center mx-3" id="inputQuantity" type="num" value="1"
+                               style="max-width: 3rem"/>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            افزودن به سبد خرید
+                        </button>
+                    </div>
+                </div>
+                <center>
+                    <div class="col-md-6 mt-5">
+                        <table class="table table-bordered">
+                            <caption>اطلاعات فنی</caption>
+                            <tbody>
+                            {% for data in object.data.all %}
+                                <tr>
+                                    <td><b>{{ data.key }}</b></td>
+                                    <td>{{ data.value }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </center>
+            </div>
+            <!-- comments -->
+            <div class="container mt-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-7">
+                        <div class="shadow p-3 bg-white rounded">
+                            <h4 class="text-dark">نظرات</h4>
+                            <div class="d-flex flex-row">
+                                <div class="w-100 ml-2 comment-area"> <textarea rows="1" placeholder="نظری بنویسید ..."
+                                                                                class="form-control"></textarea>
+                                    <button class="btn btn-secondary btn-block mt-2 post-btn">ارسال</button>
+                                </div>
+                            </div>
+                            <div class="flex-row mt-4">
+                                <div class="ml-2 w-100">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <span class="font-weight-bold name">علی اکبری </span>
+                                            <span class="dots mx-2"></span> <small class="text-muted time-text">1 ساعت
+                                            قبل</small>
+                                        </div>
+                                    </div>
+                                    <p class="user-comment-text text-justify mt-2">Lorem ipsum dolor sit amet,
+                                        consectetur
+                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                                        ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                                <div class="ml-2 w-100">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <span class="font-weight-bold name">علی اکبری </span>
+                                            <span class="dots mx-2"></span> <small class="text-muted time-text">1 ساعت
+                                            قبل</small>
+                                        </div>
+                                    </div>
+                                    <p class="user-comment-text text-justify mt-2">Lorem ipsum dolor sit amet,
+                                        consectetur
+                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                                        ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                                <div class="ml-2 w-100">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <span class="font-weight-bold name">علی اکبری </span>
+                                            <span class="dots mx-2"></span> <small class="text-muted time-text">1 ساعت
+                                            قبل</small>
+                                        </div>
+                                    </div>
+                                    <p class="user-comment-text text-justify mt-2">Lorem ipsum dolor sit amet,
+                                        consectetur
+                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                                        ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Related items section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">محصولات مرتبط</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for item in object.related_products.active %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            {% with item.photos.all|first as first_photo %}
+                                <img class="card-img-top" src="{{ first_photo.photo.url }}"
+                                     alt="{{ first_photo.alt }}"/>
+                            {% endwith %}
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder"><a class="product-name" href="{% url 'product:product-detail' item.slug %}">{{ item.name }}</a></h5>
+                                <!-- Product price-->
+                                    {{ item.humanize_price }} تومان
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View
+                                    options</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
