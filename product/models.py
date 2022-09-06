@@ -19,7 +19,7 @@ class Category(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children', default=None, blank=True,
                                null=True, verbose_name='زیر دسته')
 
-    objects = CategoryManager()
+    objects = BaseManager()
 
     class Meta:
         verbose_name = 'دسته بندی'
@@ -58,7 +58,7 @@ class Product(models.Model):
         "self", verbose_name='محصولات مرتبط', blank=True,
         default=None, symmetrical=False, related_name="related_products_list")
 
-    objects = ProductManager()
+    objects = BaseManager()
 
     class Meta:
         verbose_name = 'محصول'

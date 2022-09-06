@@ -6,6 +6,7 @@ from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 
 from extentions.utils import jalali_converot
+from product.managers import BaseManager, ArticleManager
 
 
 class Category(models.Model):
@@ -15,6 +16,8 @@ class Category(models.Model):
     position = models.IntegerField(verbose_name='پوزیشن')
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, related_name='children', default=None, blank=True,
                                null=True, verbose_name='زیر دسته')
+
+    objects = BaseManager()
 
     class Meta:
         verbose_name = 'دسته بندی'
@@ -44,6 +47,8 @@ class Article(models.Model):
 
     meta_title = models.CharField('عنوان متا', help_text='اختیاری', max_length=125, blank=True)
     meta_description = models.TextField('توضیحات متا', help_text='اختیاری', max_length=258, blank=True)
+
+    objects = ArticleManager()
 
     def __str__(self):
         return self.title
