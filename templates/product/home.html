@@ -1,0 +1,117 @@
+{% extends 'product/base.html' %}
+
+{% block title %}خانه{% endblock %}
+
+{% block main %}
+    <!-- Header-->
+    <header class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center">
+                <h1 class="display-4 fw-bolder" style="font-weight: bold;">الکتروشاپ</h1>
+                <p class="lead fw-normal mb-0">فروش آنلاین انواع موبایل</p>
+            </div>
+        </div>
+    </header>
+    <!-- Section-->
+    <!-- Newest -->
+    <div class="horizontal-center sec-title pt-5">جدید ترین ها</div>
+    <section class="pb-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for product in newest_products %}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Sale badge-->
+                        <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">جدید
+                        </div>
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{ product.photos.all.0.photo.url }}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ product.name }}</h5>
+                                <!-- Product price-->
+                                {{ product.humanize_price }} تومان
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">افزودن به سبد خرید</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a class="btn btn-warning w-25 horizontal-center">بیشتر ...</a>
+    </section>
+    <hr />
+    <!-- Best selling -->
+    <div class="horizontal-center sec-title pt-5">پرفروش ترین ها</div>
+    <section class="pb-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for product in best_selling_products %}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Sale badge-->
+                        <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">پرفروش
+                        </div>
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{ product.photos.all.0.photo.url }}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ product.name }}</h5>
+                                <!-- Product price-->
+                                {{ product.humanize_price }} تومان
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">افزودن به سبد خرید</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    {% empty %}
+                            <div class="alert alert-info text-center">محتوایی برای نمایش وجود ندارد!</div>
+                {% endfor %}
+            </div>
+        </div>
+        <a class="btn btn-warning w-25 horizontal-center">بیشتر ...</a>
+    </section>
+    <hr />
+
+    <!-- Blog -->
+    <div class="horizontal-center sec-title pt-5">وبلاگ</div>
+    <section class="py-5">
+        <div class="container">
+            <section id="gallery">
+                <div class="container">
+                    <div class="row">
+                        {% for article in latest_articles %}
+                        <div class="col-lg-4 mb-4">
+                            <div class="card">
+                                <img src="{{ article.image.url }}"
+                                    alt="" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ article.title }}</h5>
+                                    <p class="card-text">{{ article.description|truncatewords:30|safe }}</p>
+                                    <a href="" class="btn btn-outline-success btn-sm">خواندن بقیه</a>
+                                </div>
+                            </div>
+                        </div>
+                            {% empty %}
+                            <div class="alert alert-info text-center">محتوایی برای نمایش وجود ندارد!</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <a class="btn btn-warning w-25 horizontal-center">بیشتر ...</a>
+            </section>
+        </div>
+    </section>
+{% endblock %}

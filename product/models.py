@@ -44,6 +44,7 @@ class Product(models.Model):
     publish = models.DateTimeField(default=timezone.now, verbose_name='تاریخ انتشار')
     price = models.PositiveBigIntegerField('قیمت', help_text='به تومان وارد کنید.')
     quantity = models.PositiveIntegerField('موجودی')
+    # TODO: Create main image field
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

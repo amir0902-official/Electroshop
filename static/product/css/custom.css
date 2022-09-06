@@ -1,0 +1,60 @@
+body>header {
+    background-image: url("../assets/slider-thumb-full-3.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: .9;
+}
+
+.a-none {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.a-none:hover {
+    color: rgb(252, 214, 0);
+    text-decoration: underline;
+}
+
+.horizontal-center {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    font-family: Vazirmatn;
+    letter-spacing: 0;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+}
+
+.sec-title {
+    font-size: 30px;
+    color: #000;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.sec-title::before {
+    position: absolute;
+    content: '';
+    width: 40px;
+    background: linear-gradient(to right, #fff56e, #ffcc02 100%);
+    height: 2px;
+    bottom: 21px;
+    right: calc(100% + 10px);
+}
+
+.sec-title::after {
+    position: absolute;
+    content: '';
+    width: 40px;
+    background: linear-gradient(to right, #ffcc02, #fff56e 100%);
+    height: 2px;
+    bottom: 21px;
+    left: calc(100% + 10px);
+}
+
+hr {
+    border: 1px solid rgb(255, 217, 0);
+}
