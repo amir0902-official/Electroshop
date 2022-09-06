@@ -31,7 +31,7 @@ class Article(models.Model):
         ('p', 'منتشر شده'),
     )
     title = models.CharField(max_length=200, verbose_name='عنوان')
-    slug = models.SlugField(max_length=100, allow_unicode=True, unique=True, verbose_name='آدرس صفحه')
+    slug = models.SlugField(max_length=100, allow_unicode=True, blank=True, unique=True, verbose_name='آدرس صفحه')
     category = models.ManyToManyField(Category, verbose_name='دسته بندی', related_name='articles')
     description = RichTextUploadingField(verbose_name='محتوا')
     image = models.ImageField(upload_to='blog', verbose_name='عکس اصلی')
@@ -43,7 +43,7 @@ class Article(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name='وضعیت')
 
     meta_title = models.CharField('عنوان متا', help_text='اختیاری', max_length=125, blank=True)
-    meta_description = models.TextField('توضیحات متا', help_text='اختیاری', max_length=125, blank=True)
+    meta_description = models.TextField('توضیحات متا', help_text='اختیاری', max_length=258, blank=True)
 
     def __str__(self):
         return self.title
@@ -58,7 +58,7 @@ class Article(models.Model):
 
     def thumbnail_tag(self):
         return format_html(
-            '<img style="max-width:100px;border-radius: 5px;" height="75px" src="%s"/>' % self.thumbnail.url)
+            '<img style="max-width:100px;border-radius: 5px;" height="75px" src="%s"/>' % self.image.url)
 
     thumbnail_tag.short_description = 'عکس'
 
@@ -74,10 +74,10 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title, allow_unicode=True)
         if not self.meta_title:
             self.meta_title = self.title
         if not self.meta_description:
-            self.meta_description = strip_tags(self.description)
+            self.meta_description = f'{strip_tags(self.description)[:254]} ...'
 
         super(Article, self).save(*args, **kwargs)
