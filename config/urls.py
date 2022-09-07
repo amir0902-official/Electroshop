@@ -17,7 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from decouple import config
 
+from product.views import home
+
 urlpatterns = [
+    path('', home, name='home'),
     path('', include('product.urls'), name='product'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
