@@ -1,0 +1,42 @@
+{% load product_tags %}
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand text-warning" href="{% url 'home' %}">الکتروشاپ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+{#                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">خانه</a>#}
+                    {% link request 'home' 'home' 'خانه' 'nav-link' %}
+                </li>
+                {% for cat in categories %}
+                    {% if cat.parent == None %}
+                        {% if cat.children.active %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">{{ cat.name }}</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% for cat in cat.children.active %}
+                                        <li><a class="dropdown-item" href="#!">{{ cat.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">{% link request 'home' 'home' cat.name 'nav-link' %}</li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <form class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    سبد خرید
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
