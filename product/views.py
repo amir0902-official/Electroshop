@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from blog.models import Article
 from .models import Product, Category
@@ -18,13 +18,20 @@ def home(request):
 
 
 def category_page(request, slug):
-    page_number = request.GET.get('page') or 1
+    page_number = request.GET.get('page', 1)
 
     category = get_object_or_404(Category.objects.active(), slug=slug)
     products = category.products.active()
 
     paginator = Paginator(products, 2)
-    page_obj = paginator.get_page(page_number)
+
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
     context = {
         'category': category,
         'objects': page_obj,
