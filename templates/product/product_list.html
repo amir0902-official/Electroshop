@@ -1,0 +1,5 @@
+{% extends 'product/list.html' %}
+
+{% block title %}{% block pg-title %}همه محصولات{% endblock %}{% endblock %}
+
+{% block next-page-addr %}?page={{ page_obj.next_page_number }}{% endblock %}

@@ -8,7 +8,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">خانه</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                       aria-current="page" href="{% url 'home' %}">خانه</a>
                 </li>
                 {% for cat in categories %}
                     {% if cat.parent == None %}
@@ -24,17 +25,28 @@
                                 </ul>
                             </li>
                         {% else %}
-                            <li class="nav-item"><a href="{% url 'product:category' cat.slug %}"
-                                                    class="nav-link">{{ cat.name }}</a></li>
+                            <li class="nav-item">
+                                {% if request.resolver_match.url_name == 'category' and request.resolver_match.kwargs.slug == cat.slug %}
+                                    <a href="{% url 'product:category' cat.slug %}"
+                                       class="nav-link active">{{ cat.name }}</a>
+                                {% else %}
+                                    <a href="{% url 'product:category' cat.slug %}" class="nav-link">{{ cat.name }}</a>
+                                {% endif %}
+                            </li>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'all-products' %}active{% endif %}"
+                       aria-current="page" href="{% url 'product:all-products' %}">همه محصولات</a>
+                </li>
             </ul>
             <div class="d-flex mb-2 mb-lg-0">
                 <form method="get" action="{% url 'product:search' %}" class="form-inline">
                     <div class="col-auto">
                         <label for="searchbox" class="visually-hidden">Search</label>
-                        <input id="searchbox" value="{{ request.GET.q }}" class="form-control w-50" style="border-radius: 5px" type="text" name="q"
+                        <input id="searchbox" value="{{ request.GET.q }}" class="form-control w-50"
+                               style="border-radius: 5px" type="text" name="q"
                                placeholder="جستوجو"/>
                         <button style="border-radius: 5px" class="btn btn-primary"><i class="bi bi-search"></i></button>
                     </div>

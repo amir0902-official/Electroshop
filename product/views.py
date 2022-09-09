@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 
@@ -67,3 +67,9 @@ class ProductDetailView(DetailView):
     def get_object(self, queryset=None):
         slug = self.kwargs.get('slug')
         return get_object_or_404(Product.objects.active(), slug=slug)
+
+
+class ProductListView(ListView):
+    context_object_name = 'objects'
+    paginate_by = 2
+    queryset = Product.objects.active()

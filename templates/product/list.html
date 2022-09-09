@@ -33,7 +33,7 @@
                     </div>
                 {% endfor %}
             </div>
-            {% if objects.has_next %}
+            {% if objects.has_next or page_obj.has_next %}
                 <a href="{% block next-page-addr %}{% endblock %}"
                    class="btn btn-warning w-25 horizontal-center infinite-more-link">بیشتر ...</a>
             {% endif %}
