@@ -1,0 +1,63 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block title %}جستوجوی {{ search }}{% endblock %}
+
+{% block main %}
+    <div class="horizontal-center sec-title pt-5">جستوجوی {{ search }}</div>
+    <section class="pb-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center infinite-container">
+                {% for product in objects %}
+                    <div class="col mb-5 infinite-item">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ product.photos.all.0.photo.url }}"
+                                 alt="{{ product.photos.all.0.alt }}"/>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder"><a class="product-name"
+                                                             href="{% url 'product:product-detail' product.slug %}">{{ product.name }}</a>
+                                    </h5>
+                                    <!-- Product price-->
+                                    {{ product.humanize_price }} تومان
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">افزودن به سبد
+                                    خرید</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if objects.has_next %}
+                <a href="{% url 'product:search' %}?q={{ search }}&page={{ objects.next_page_number }}"
+                   class="btn btn-warning w-25 horizontal-center infinite-more-link">بیشتر ...</a>
+            {% endif %}
+            <div class="loading" style="display: none;">
+                Loading...
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block custom-js %}
+    <script src="{% static 'product/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'product/js/infinite.min.js' %}"></script>
+    <script>
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            onBeforePageLoad: function () {
+                $('.loading').show();
+            },
+            onAfterPageLoad: function ($items) {
+                $('.loading').hide();
+            }
+        });
+    </script>
+{% endblock %}
