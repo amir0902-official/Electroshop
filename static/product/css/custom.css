@@ -67,3 +67,12 @@ hr {
 .product-name:hover{
     color: rgb(241 206 11);
 }
+
+.form-inline .form-control {
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+}
+label {
+  margin-bottom: 0.5rem;
+}
