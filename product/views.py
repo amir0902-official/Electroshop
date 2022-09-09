@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView
+from django.core.paginator import Paginator
 
 from blog.models import Article
-from .models import Product
+from .models import Product, Category
 
 
 def home(request):
@@ -14,6 +15,21 @@ def home(request):
         'latest_articles': Article.objects.filter(status='p')[:3],
     }
     return render(request, 'product/home.html', context)
+
+
+def category_page(request, slug):
+    page_number = request.GET.get('page') or 1
+
+    category = get_object_or_404(Category.objects.active(), slug=slug)
+    products = category.products.active()
+
+    paginator = Paginator(products, 2)
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'category': category,
+        'objects': page_obj,
+    }
+    return render(request, 'product/category.html', context)
 
 
 class ProductDetailView(DetailView):

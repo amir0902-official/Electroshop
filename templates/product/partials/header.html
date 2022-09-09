@@ -9,8 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-{#                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">خانه</a>#}
-                    {% link request 'home' 'home' 'خانه' 'nav-link' %}
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">خانه</a>
                 </li>
                 {% for cat in categories %}
                     {% if cat.parent == None %}
@@ -20,12 +19,12 @@
                                    data-bs-toggle="dropdown" aria-expanded="false">{{ cat.name }}</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     {% for cat in cat.children.active %}
-                                        <li><a class="dropdown-item" href="#!">{{ cat.name }}</a></li>
+                                        <li><a href="{% url 'product:category' cat.slug %}" class="dropdown-item">{{ cat.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </li>
                         {% else %}
-                            <li class="nav-item">{% link request 'home' 'home' cat.name 'nav-link' %}</li>
+                            <li class="nav-item"><a href="{% url 'product:category' cat.slug %}" class="nav-link">{{ cat.name }}</a></li>
                         {% endif %}
                     {% endif %}
                 {% endfor %}

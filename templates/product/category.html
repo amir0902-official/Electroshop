@@ -1,0 +1,66 @@
+{% extends 'product/base.html' %}
+
+{% block title %}دسته بندی {{ cateory.name }}{% endblock %}
+
+{% block main %}
+    <div class="horizontal-center sec-title pt-5">{{ category.name }}</div>
+    <section class="pb-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for product in objects %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ product.photos.all.0.photo.url }}"
+                                 alt="{{ product.photos.all.0.alt }}"/>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder"><a class="product-name"
+                                                             href="{% url 'product:product-detail' product.slug %}">{{ product.name }}</a>
+                                    </h5>
+                                    <!-- Product price-->
+                                    {{ product.humanize_price }} تومان
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">افزودن به سبد
+                                    خرید</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if objects.has_other_pages %}
+                <nav class="d-flex align-items-center justify-content-center" aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item {% if not objects.has_previous %}disabled{% endif %}">
+                            <a class="page-link"
+                               href="?page={% if objects.has_previous %}{{ objects.previous_page_number }}{% endif %}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% for i in objects.paginator.page_range %}
+                            {% if objects.number == i %}
+                                <li class="active page-item"><a class="page-link" href="#">{{ i }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="page-item {% if not objects.has_next %}disabled{% endif %}">
+                            <a class="page-link"
+                               href="?page={% if objects.has_next %}{{ objects.next_page_number }}{% endif %}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
