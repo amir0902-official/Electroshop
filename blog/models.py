@@ -79,7 +79,7 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title, allow_unicode=True)
+            self.slug = slugify(self.title)
         if not self.meta_title:
             self.meta_title = self.title
         if not self.meta_description:
