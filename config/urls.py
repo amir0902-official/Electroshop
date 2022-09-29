@@ -22,6 +22,7 @@ from product.views import home
 urlpatterns = [
     path('', home, name='home'),
     path('', include('product.urls'), name='product'),
+    path('blog/', include('blog.urls'), name='blog'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
 ]

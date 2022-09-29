@@ -99,7 +99,7 @@
                                 <img src="{{ article.image.url }}"
                                     alt="" class="card-img-top">
                                 <div class="card-body">
-                                    <h5 class="card-title"><a class="product-name" href="#">{{ article.title }}</a></h5>
+                                    <h5 class="card-title"><a class="product-name" href="{% url 'blog:detail' article.slug %}">{{ article.title }}</a></h5>
                                     <p class="card-text">{{ article.description|truncatewords:30|safe }}</p>
                                     <a href="" class="btn btn-outline-success btn-sm">خواندن بقیه</a>
                                 </div>

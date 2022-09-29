@@ -1,0 +1,61 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand text-warning" href="{% url 'home' %}">الکتروشاپ <small>: وبلاگ</small></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                       aria-current="page" href="{% url 'home' %}">خانه</a>
+                </li>
+                {% for cat in categories %}
+                    {% if cat.parent == None %}
+                        {% if cat.children.active %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">{{ cat.title }}</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% for cat in cat.children.active %}
+                                        <li><a href="{% url 'product:category' cat.slug %}"
+                                               class="dropdown-item">{{ cat.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                {% if request.resolver_match.url_name == 'category' and request.resolver_match.kwargs.slug == cat.slug %}
+                                    <a href="{% url 'product:category' cat.slug %}"
+                                       class="nav-link active">{{ cat.title }}</a>
+                                {% else %}
+                                    <a href="{% url 'product:category' cat.slug %}" class="nav-link">{{ cat.title }}</a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'all-articles' %}active{% endif %}"
+                       aria-current="page" href="{% url 'product:all-products' %}">همه مقالات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       aria-current="page" href="{% url 'home' %}">فروشگاه</a>
+                </li>
+            </ul>
+            <div class="d-flex mb-2 mb-lg-0">
+                <form method="get" action="{% url 'product:search' %}" class="form-inline">
+                    <div class="col-auto">
+                        <label for="searchbox" class="visually-hidden">Search</label>
+                        <input id="searchbox" value="{{ request.GET.q }}" class="form-control w-50"
+                               style="border-radius: 5px" type="text" name="q"
+                               placeholder="جستوجو"/>
+                        <button style="border-radius: 5px" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
