@@ -8,7 +8,6 @@ This project is an online store written by Python and Django.
 
 ## Badges
 <span>
-<a href='https://www.heroku.com/'><img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white" /></a>
 <a href='https://python.org'><img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/></a>
 <a href='https://www.djangoproject.com/'><img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" /></a>
 <a href='https://www.postgresql.org/'><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" /></a>
